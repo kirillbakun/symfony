@@ -1,0 +1,31 @@
+Application\MainBundle\Entity\User:
+    type: entity
+    table: user
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        isActive:
+            type: boolean
+            nullable: true
+            comment: ''
+            column: is_active
+        login:
+            type: string
+            nullable: true
+            length: 100
+            fixed: false
+            comment: ''
+        email:
+            type: string
+            nullable: true
+            length: 100
+            fixed: false
+            comment: ''
+    lifecycleCallbacks: {  }
