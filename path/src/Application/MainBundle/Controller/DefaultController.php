@@ -9,7 +9,11 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $article_manager = new ArticleManager();
+        $repository = $this->getDoctrine()->getRepository('ApplicationMainBundle:Article');
+
+        $article_manager = new ArticleManager($repository);
+        $articles = $article_manager->getList();
+
         return $this->render('ApplicationMainBundle:Default:index.html.php', array('name' => 'Your name'));
     }
 }

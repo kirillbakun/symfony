@@ -1,5 +1,6 @@
 <?php
     namespace Application\MainBundle\Manager;
 
-    class ArticleManager
-    {}
+    class ArticleManager extends AbstractManager
+    {
+    }
