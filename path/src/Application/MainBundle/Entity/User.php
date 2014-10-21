@@ -31,6 +31,13 @@ class User
     /**
      * @var string
      *
+     * @ORM\Column(name="email", type="string", length=100, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="login", type="string", length=100, nullable=true)
      */
     private $login;
@@ -38,9 +45,9 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=100, nullable=true)
+     * @ORM\Column(name="password", type="string", length=32, nullable=true)
      */
-    private $email;
+    private $password;
 
 
 
@@ -78,29 +85,6 @@ class User
     }
 
     /**
-     * Set login
-     *
-     * @param string $login
-     * @return User
-     */
-    public function setLogin($login)
-    {
-        $this->login = $login;
-
-        return $this;
-    }
-
-    /**
-     * Get login
-     *
-     * @return string 
-     */
-    public function getLogin()
-    {
-        return $this->login;
-    }
-
-    /**
      * Set email
      *
      * @param string $email
@@ -124,11 +108,48 @@ class User
     }
 
     /**
-     * Implements __toString()
-     * @return string
+     * Set login
+     *
+     * @param string $login
+     * @return User
      */
-    public function __toString()
+    public function setLogin($login)
     {
-        return $this->getLogin();
+        $this->login = $login;
+
+        return $this;
+    }
+
+    /**
+     * Get login
+     *
+     * @return string 
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 }

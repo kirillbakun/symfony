@@ -16,16 +16,22 @@ Application\MainBundle\Entity\User:
             nullable: true
             comment: ''
             column: is_active
+        email:
+            type: string
+            nullable: true
+            length: 100
+            fixed: false
+            comment: ''
         login:
             type: string
             nullable: true
             length: 100
             fixed: false
             comment: ''
-        email:
+        password:
             type: string
             nullable: true
-            length: 100
-            fixed: false
+            length: 32
+            fixed: true
             comment: ''
     lifecycleCallbacks: {  }
