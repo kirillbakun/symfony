@@ -11,18 +11,21 @@
         protected function configureFormFields(FormMapper $form_mapper) {
             $form_mapper
                 ->add('text', 'text', array('label' => 'Article Title'))
-                ->add('user.login', 'text', array('label' => 'User id'));
+                ->add('user', null, array('label' => 'User id'))
+                ->add('isActive', null, array('label' => 'Active'));
         }
 
         protected function configureDatagridFilters(DatagridMapper $datagrid_mapper) {
             $datagrid_mapper
-                ->add('text')
-                ->add('user.login');
+                ->add('text', null, array('label' => 'Article Title'))
+                ->add('user', null, array('label' => 'User Login'))
+                ->add('isActive', null, array('label' => 'Active'));;
         }
 
         protected function configureListFields(ListMapper $list_mapper) {
             $list_mapper
-                ->addIdentifier('text')
-                ->add('user.login');
+                ->addIdentifier('text', null, array('label' => 'Article Title'))
+                ->add('user', null, array('label' => 'User Login'))
+                ->add('isActive', null, array('label' => 'Active', 'editable' => true));
         }
     }

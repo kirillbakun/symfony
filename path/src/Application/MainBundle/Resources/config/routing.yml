@@ -3,6 +3,11 @@ application_index:
     defaults: { _controller: ApplicationMainBundle:Default:index }
 
 
+login:
+    path:     /login
+    defaults: { _controller: ApplicationMainBundle:Security:login }
+login_check:
+    path: /login_check
 
 
 admin:
