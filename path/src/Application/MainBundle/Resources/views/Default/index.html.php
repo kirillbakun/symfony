@@ -4,10 +4,10 @@
     <ul>
         <?php foreach($articles as $article): ?>
             <?php
-                $user = $article->getUser();
+/*                $user = $article->getUser();
                 $user_login = !(empty($user)) ? ' - ' .$user->getLogin() : '';
-            ?>
-            <li><?php echo $article->getText() .$user_login; ?></li>
+            */?>
+            <li><?php echo $article->getText(); ?></li>
         <?php endforeach; ?>
     </ul>
 <?php $view['slots']->stop(); ?>

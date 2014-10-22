@@ -1,6 +1,13 @@
 Application\MainBundle\Entity\User:
     type: entity
     table: user
+    uniqueConstraints:
+        unique_username:
+            columns:
+                - username
+        unique_email:
+            columns:
+                - email
     id:
         id:
             type: integer
@@ -11,27 +18,44 @@ Application\MainBundle\Entity\User:
             generator:
                 strategy: IDENTITY
     fields:
+        username:
+            type: string
+            nullable: false
+            length: 50
+            fixed: false
+            comment: ''
+        password:
+            type: string
+            nullable: false
+            length: 64
+            fixed: false
+            comment: ''
+        email:
+            type: string
+            nullable: false
+            length: 100
+            fixed: false
+            comment: ''
         isActive:
             type: boolean
             nullable: true
             comment: ''
             column: is_active
-        email:
-            type: string
-            nullable: true
-            length: 100
-            fixed: false
-            comment: ''
-        login:
-            type: string
-            nullable: true
-            length: 100
-            fixed: false
-            comment: ''
-        password:
-            type: string
-            nullable: true
-            length: 32
-            fixed: true
-            comment: ''
+    manyToMany:
+        role:
+            targetEntity: Role
+            cascade: {  }
+            mappedBy: null
+            inversedBy: user
+            joinTable:
+                name: user_to_role
+                joinColumns:
+                    -
+                        name: user_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: role_id
+                        referencedColumnName: id
+            orderBy: null
     lifecycleCallbacks: {  }

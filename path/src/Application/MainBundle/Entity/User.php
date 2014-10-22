@@ -3,14 +3,15 @@
 namespace Application\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="unique_username", columns={"username"}), @ORM\UniqueConstraint(name="unique_email", columns={"email"})})
  * @ORM\Entity
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer
@@ -22,6 +23,27 @@ class User
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=50, nullable=false)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=64, nullable=false)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=100, nullable=false)
+     */
+    private $email;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="is_active", type="boolean", nullable=true)
@@ -29,26 +51,27 @@ class User
     private $isActive;
 
     /**
-     * @var string
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\Column(name="email", type="string", length=100, nullable=true)
+     * @ORM\ManyToMany(targetEntity="Application\MainBundle\Entity\Role", inversedBy="user")
+     * @ORM\JoinTable(name="user_to_role",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="role_id", referencedColumnName="id")
+     *   }
+     * )
      */
-    private $email;
+    private $role;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="login", type="string", length=100, nullable=true)
+     * Constructor
      */
-    private $login;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=32, nullable=true)
-     */
-    private $password;
-
+    public function __construct()
+    {
+        $this->role = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -62,26 +85,49 @@ class User
     }
 
     /**
-     * Set isActive
+     * Set username
      *
-     * @param boolean $isActive
+     * @param string $username
      * @return User
      */
-    public function setIsActive($isActive)
+    public function setUsername($username)
     {
-        $this->isActive = $isActive;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get isActive
+     * Get username
      *
-     * @return boolean 
+     * @return string 
      */
-    public function getIsActive()
+    public function getUsername()
     {
-        return $this->isActive;
+        return $this->username;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     /**
@@ -108,48 +154,112 @@ class User
     }
 
     /**
-     * Set login
+     * Set isActive
      *
-     * @param string $login
+     * @param boolean $isActive
      * @return User
      */
-    public function setLogin($login)
+    public function setIsActive($isActive)
     {
-        $this->login = $login;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
     /**
-     * Get login
+     * Get isActive
      *
-     * @return string 
+     * @return boolean 
      */
-    public function getLogin()
+    public function getIsActive()
     {
-        return $this->login;
+        return $this->isActive;
     }
 
     /**
-     * Set password
+     * Add role
      *
-     * @param string $password
+     * @param \Application\MainBundle\Entity\Role $role
      * @return User
      */
-    public function setPassword($password)
+    public function addRole(\Application\MainBundle\Entity\Role $role)
     {
-        $this->password = $password;
+        $this->role[] = $role;
 
         return $this;
     }
 
     /**
-     * Get password
+     * Remove role
      *
-     * @return string 
+     * @param \Application\MainBundle\Entity\Role $role
      */
-    public function getPassword()
+    public function removeRole(\Application\MainBundle\Entity\Role $role)
     {
-        return $this->password;
+        $this->role->removeElement($role);
+    }
+
+    /**
+     * Get role
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
     }
 }
