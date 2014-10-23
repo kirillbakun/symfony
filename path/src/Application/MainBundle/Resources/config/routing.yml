@@ -9,6 +9,14 @@ login:
 login_check:
     path: /login_check
 
+account_register:
+    path:     /register
+    defaults: { _controller: ApplicationMainBundle:Security:register }
+
+account_create:
+    path:     /register/create
+    defaults: { _controller: ApplicationMainBundle:Security:create }
+
 
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'

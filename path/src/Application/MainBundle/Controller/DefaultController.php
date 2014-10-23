@@ -9,8 +9,6 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $repository = $this->getDoctrine()->getRepository('ApplicationMainBundle:Article');
-
         $entity_repository = $this->getDoctrine()->getRepository('ApplicationMainBundle:Article');
         $articles = $entity_repository->findAll();
 
