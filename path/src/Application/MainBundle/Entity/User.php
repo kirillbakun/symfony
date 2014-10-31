@@ -225,7 +225,14 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $roles = $this->getRole()->toArray();
+        $roles_array = array();
+
+        foreach($roles as $role) {
+            $roles_array[] = $role->getRole();
+        }
+
+        return $roles_array;
     }
 
     /**
@@ -261,5 +268,10 @@ class User implements UserInterface, \Serializable
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized);
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
     }
 }

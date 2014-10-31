@@ -82,3 +82,5 @@ sonata_block:
 
 sonata_admin:
     title:      Admin Bundle
+    templates:
+      dashboard: ApplicationMainBundle:Sonata:dashboard.html.twig
