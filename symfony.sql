@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50619
 File Encoding         : 65001
 
-Date: 2014-10-23 18:32:34
+Date: 2015-01-19 19:07:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -59,8 +59,8 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', 'role_name', 'role');
-INSERT INTO `role` VALUES ('2', 'one_more_role_name', 'one_more_roel');
+INSERT INTO `role` VALUES ('1', 'user', 'ROLE_USER');
+INSERT INTO `role` VALUES ('2', 'admin', 'ROLE_ADMIN');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -91,10 +91,12 @@ CREATE TABLE `user_to_role` (
   `role_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`),
   KEY `role_id` (`role_id`),
-  CONSTRAINT `user_to_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `user_to_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `user_to_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_to_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_to_role
 -- ----------------------------
+INSERT INTO `user_to_role` VALUES ('5', '1');
+INSERT INTO `user_to_role` VALUES ('5', '2');
